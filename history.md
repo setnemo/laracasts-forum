@@ -11,3 +11,14 @@ php artisan migrate:refresh
 >>> $threads = factory('App\Thread', 50)->create();
 >>> $threads->each(function ($thread) { factory('App\Reply', 10)->create(['thread_id' => $thread->id]); });
 ```
+
+### Episode 2
+```bash
+php artisan make:auth
+```
+Add to phpunit.xml
+```xml
+<server name="DB_CONNECTION" value="sqlite"/>
+<server name="DB_DATABASE" value=":memory:"/>
+```
+
