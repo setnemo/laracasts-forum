@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+  #Laravel App
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hakase-labs/laravel
+    container_name: 'laracasts-forum-app'
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - laracasts-forum-network
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: 'laracasts-forum-nginx'
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/conf.d/:/etc/nginx/conf.d/
+      - ./docker/ssl/:/etc/nginx/ssl/
+    networks:
+      - laracasts-forum-network
+  mysql:
+    image: mysql:5.7.22
+    container_name: 'laracasts-forum-mysql'
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: 'laracasts-forum-pma'
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '8080:80'
+#Docker Networks
+networks:
+  laracasts-forum-network:
+    driver: bridge
