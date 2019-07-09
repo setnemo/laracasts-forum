@@ -30,5 +30,17 @@ php artisan make:test ReplyTest --unit
 ```
 Added relationship Reply => User
 
-
+### Episode 4
+Refactor show, added replay.blade.php
+```bash
+phpunit --filter testThreadHasCreator # run 1 test method from files
+php artisan make:test ParticipateInForum
+```
+Fixed app/Exceptions/Handler.php, added `if (app()->environment() === 'testing') throw $exception;`
+```bash
+phpunit --filter ThreadTest # run 1 file
+```
+```php
+protected $guarded = [];
+```
 
