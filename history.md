@@ -28,7 +28,7 @@ Added relationship Thread => Reply
 ```bash
 php artisan make:test ReplyTest --unit
 ```
-Added relationship Reply => User
+Added relationship Reply => User 
 
 ### Episode 4
 Refactor show, added replay.blade.php
@@ -44,3 +44,11 @@ phpunit --filter ThreadTest # run 1 file
 protected $guarded = [];
 ```
 
+### Episode 5
+```php
+@if(auth()->check())
+    {{ csrf_field() }}
+@else
+    <p>Please <a href="{{ route('login') }}">sign in</a> to participate in this discussion.</p>
+@endif
+```
