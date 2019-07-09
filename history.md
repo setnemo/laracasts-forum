@@ -51,4 +51,13 @@ protected $guarded = [];
 @else
     <p>Please <a href="{{ route('login') }}">sign in</a> to participate in this discussion.</p>
 @endif
+$this->be($user = factory('App\User')->create());
+$this->expectException('Illuminate\Auth\AuthenticationException');
+```
+
+### Episode 6
+```php
+$this->middleware('auth')->only('store');
+$this->actingAs(factory('App\User')->create());
+$this->expectException('Illuminate\Auth\AuthenticationException');
 ```
