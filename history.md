@@ -21,4 +21,14 @@ Add to phpunit.xml
 <server name="DB_CONNECTION" value="sqlite"/>
 <server name="DB_DATABASE" value=":memory:"/>
 ```
+Write first test cases
+
+### Episode 3
+Added relationship Thread => Reply
+```bash
+php artisan make:test ReplyTest --unit
+```
+Added relationship Reply => User
+
+
 
