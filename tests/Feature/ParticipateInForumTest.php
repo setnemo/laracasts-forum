@@ -9,26 +9,31 @@ class ParticipateInForumTest extends TestCase
 {
     use DatabaseMigrations;
 
+    protected $thread;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->thread = create('App\Thread');
+    }
+
     public function testUnAuthUserMayNotAddreplies()
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
 
-        $thread = factory('App\Thread')->create();
-
-        $this->post($thread->getPath() . '/replies', []);
+        $this->post($this->thread->getPath() . '/replies', []);
     }
 
     public function testAuthUserMayParticipateInForum()
     {
-        $this->be($user = factory('App\User')->create());
+        $this->signIn();
 
-        $thread = factory('App\Thread')->create();
+        $reply = make('App\Reply');
 
-        $reply = factory('App\Reply')->make();
+        $this->post($this->thread->getPath() . '/replies', $reply->toArray());
 
-        $this->post($thread->getPath() . '/replies', $reply->toArray());
-
-        $this->get($thread->getPath())
+        $this->get($this->thread->getPath())
             ->assertSee($reply->body);
     }
 }

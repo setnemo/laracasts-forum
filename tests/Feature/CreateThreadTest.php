@@ -4,8 +4,6 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateThreadTest extends TestCase
 {
@@ -15,16 +13,16 @@ class CreateThreadTest extends TestCase
     {
         $this->expectException('Illuminate\Auth\AuthenticationException');
 
-        $thread = factory('App\Thread')->make();
+        $thread = raw('App\Thread');
 
-        $this->post('/threads', $thread->toArray());
+        $this->post('/threads', $thread);
     }
 
     public function testAuthUserCreateNewThread()
     {
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
-        $thread = factory('App\Thread')->make();
+        $thread = make('App\Thread');
 
         $this->post('/threads', $thread->toArray());
 

@@ -15,7 +15,7 @@ class ReadThreadsTest extends TestCase
     {
         parent::setUp();
 
-        $this->threads = factory('App\Thread', 10)->create();
+        $this->threads = create('App\Thread', 10);
     }
 
     public function testUserShowAllThreads()

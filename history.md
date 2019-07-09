@@ -61,3 +61,21 @@ $this->middleware('auth')->only('store');
 $this->actingAs(factory('App\User')->create());
 $this->expectException('Illuminate\Auth\AuthenticationException');
 ```
+
+### Episode 7
+Refactor tests
+```json
+{
+    "autoload": {
+        "files": [
+            "tests/utilities/functions.php"
+        ]
+    }
+}
+```
+```bash
+composer dump-autoload
+```
+```php
+$this->signIn(); // in TestCase
+```
