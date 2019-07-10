@@ -28,9 +28,11 @@
             <div class="col-md-8 mt-3">
             @if(auth()->check())
                 <form method="POST" action="{{ $thread->getPath() . '/replies' }}">
+                    {{ csrf_field() }}
                     <div class="form-group">
-                        {{ csrf_field() }}
                         <textarea name="body" id="body" class="form-control" placeholder="Have something to say?"></textarea>
+                    </div>
+                    <div class="form-group">
                         <button type="submit" class="btn btn-primary">Post</button>
                     </div>
                 </form>

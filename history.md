@@ -25,6 +25,7 @@ Write first test cases
 
 ### Episode 3
 Added relationship Thread => Reply
+
 ```bash
 php artisan make:test ReplyTest --unit
 ```
@@ -75,6 +76,18 @@ Refactor tests
 ```
 ```bash
 composer dump-autoload
+```
+```php
+$this->signIn(); // in TestCase
+```
+
+### Episode 8
+Refactor tests
+```php
+$this->middleware('auth')->except(['index', 'show']);
+```
+```php
+$this->withExceptionHandling(); // testcases handling exceptions
 ```
 ```php
 $this->signIn(); // in TestCase
