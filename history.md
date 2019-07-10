@@ -97,8 +97,7 @@ php artisan make:model Channel -m # with migration
 ```
 Added slug to route
 
-
-### Episode 9
+### Episode 10
 Refactor tests, add request validation
 ```php
 $this->validate($request, [
@@ -108,6 +107,10 @@ $this->validate($request, [
 ]);
 ```
 
-
-
+### Episode 11
+Add route to channel
+```php
+Route::get('/threads/{channel}', 'ThreadsController@index');
+```
+Added menu for Channels
 
