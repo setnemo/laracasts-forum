@@ -114,3 +114,15 @@ Route::get('/threads/{channel}', 'ThreadsController@index');
 ```
 Added menu for Channels
 
+### Episode 12
+Fixed create thread
+```blade
+@if ($errors->any())
+    <ul class="alert alert-danger">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
+```
+

@@ -42,6 +42,7 @@
                             @endforeach
                         </ul>
                         @endif
+                        <li><a href="/threads/create" class="nav-link">New Thread</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
