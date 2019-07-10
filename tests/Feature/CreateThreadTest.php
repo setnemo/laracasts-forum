@@ -14,23 +14,17 @@ class CreateThreadTest extends TestCase
         $this->withExceptionHandling();
 
         $this->get('/threads/create')
-        ->assertRedirect('/login');
-    }
+            ->assertRedirect('/login');
 
-    public function testGuestNotCreateNewThread()
-    {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $thread = raw('App\Thread');
-
-        $this->post('/threads', $thread);
+        $this->post('/threads')
+            ->assertRedirect('/login');
     }
 
     public function testAuthUserCreateNewThread()
     {
         $this->signIn();
 
-        $thread = make('App\Thread');
+        $thread = create('App\Thread');
 
         $this->post('/threads', $thread->toArray());
 
@@ -38,5 +32,13 @@ class CreateThreadTest extends TestCase
 
         $response->assertSee($thread->title)
             ->assertSee($thread->body);
+    }
+
+
+    public function testThreadCanMakeStringPath()
+    {
+        $thread = create('App\Thread');
+
+        $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->getPath());
     }
 }

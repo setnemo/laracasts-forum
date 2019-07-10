@@ -89,6 +89,12 @@ $this->middleware('auth')->except(['index', 'show']);
 ```php
 $this->withExceptionHandling(); // testcases handling exceptions
 ```
-```php
-$this->signIn(); // in TestCase
+
+### Episode 9
+Refactor tests
+```bash
+php artisan make:model Channel -m # with migration
 ```
+Added slug to route
+
+
