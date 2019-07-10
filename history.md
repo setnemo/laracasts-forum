@@ -126,3 +126,12 @@ Fixed create thread
 @endif
 ```
 
+### Episode 13
+Fixed AppServiceProvider::boot()
+```blade
+\View::composer('threads.create', function ($view) {
+    $view->with('channels', \App\Channel::all());
+});
+\View::share('channels', \App\Channel::all());
+```
+

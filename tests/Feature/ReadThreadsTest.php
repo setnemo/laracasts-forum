@@ -26,7 +26,6 @@ class ReadThreadsTest extends TestCase
             $response->assertSee($thread->title);
             $response->assertSee($thread->body);
         }
-
     }
 
     public function testUserShowSingleThread()
