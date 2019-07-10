@@ -24,13 +24,12 @@ class CreateThreadTest extends TestCase
     {
         $this->signIn();
 
-        $thread = create('App\Thread');
+        $thread = make('App\Thread');
 
-        $this->post('/threads', $thread->toArray());
+        $response = $this->post('/threads', $thread->toArray());
 
-        $response = $this->get($thread->getPath());
-
-        $response->assertSee($thread->title)
+        $this->get($response->headers->get('Location'))
+            ->assertSee($thread->title)
             ->assertSee($thread->body);
     }
 
@@ -41,4 +40,37 @@ class CreateThreadTest extends TestCase
 
         $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->getPath());
     }
+
+    public function testThreadRequiresTitle()
+    {
+        $this->publishThread(['title' => null])
+            ->assertSessionHasErrors('title');
+    }
+
+    public function testThreadRequireBody()
+    {
+        $this->publishThread(['body' => null])
+            ->assertSessionHasErrors('body');
+    }
+
+    public function testThreadRequireChannel()
+    {
+        factory('App\Channel', 2)->create();
+
+        $this->publishThread(['channel_id' => null])
+            ->assertSessionHasErrors('channel_id');
+
+        $this->publishThread(['channel_id' => 99])
+            ->assertSessionHasErrors('channel_id');
+    }
+
+    private function publishThread(array $overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = make('App\Thread', 1, $overrides);
+
+        return $this->post('/threads', $thread->toArray());
+    }
+
 }

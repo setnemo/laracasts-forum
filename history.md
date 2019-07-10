@@ -98,3 +98,16 @@ php artisan make:model Channel -m # with migration
 Added slug to route
 
 
+### Episode 9
+Refactor tests, add request validation
+```php
+$this->validate($request, [
+    'title' => 'required',
+    'body' => 'required',
+    'channel_id' => 'required|exists:channels,id',
+]);
+```
+
+
+
+
