@@ -2,13 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
+use Tests\DatabaseTestCase;
 
-class CreateThreadTest extends TestCase
+class CreateThreadTest extends DatabaseTestCase
 {
-    use DatabaseMigrations;
-
     public function testGuestNotSeeCreateThreadPage()
     {
         $this->withExceptionHandling();

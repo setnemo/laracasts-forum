@@ -2,13 +2,10 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
+use Tests\DatabaseTestCase;
 
-class ReplyTest extends TestCase
+class ReplyTest extends DatabaseTestCase
 {
-    use DatabaseMigrations;
-
     public function testReplayHasOwner()
     {
         $reply = factory('App\Reply')->create();

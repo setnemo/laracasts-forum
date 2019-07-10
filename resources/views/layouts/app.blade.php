@@ -33,7 +33,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto nav-item dropdown">
-                        <li><a href="/threads" class="nav-link">All Threads</a></li>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse <span class="caret"></span></a>
+                        <ul class="nav-item dropdown dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a href="/threads"  class="dropdown-item"  >All Threads</a></li>
+                            @if(auth()->check())
+                            <li><a href="/threads?by={{ auth()->user()->name }}"  class="dropdown-item"  >My Threads</a></li>
+                            @endif
+                        </ul>
                         @if (count($channels))
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Channels <span class="caret"></span></a>
                         <ul class="nav-item dropdown dropdown-menu" aria-labelledby="navbarDropdown">

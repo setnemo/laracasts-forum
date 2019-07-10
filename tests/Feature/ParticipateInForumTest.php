@@ -2,13 +2,10 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
+use Tests\DatabaseTestCase;
 
-class ParticipateInForumTest extends TestCase
+class ParticipateInForumTest extends DatabaseTestCase
 {
-    use DatabaseMigrations;
-
     protected $thread;
 
     public function setUp(): void

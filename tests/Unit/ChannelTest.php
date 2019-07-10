@@ -2,15 +2,10 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\DatabaseTestCase;
 
-class ChannelTest extends TestCase
+class ChannelTest extends DatabaseTestCase
 {
-    use DatabaseMigrations;
-
     public function testChannelConsistsThreads()
     {
         $channel = create('App\Channel');

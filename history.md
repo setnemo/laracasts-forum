@@ -135,3 +135,11 @@ Fixed AppServiceProvider::boot()
 \View::share('channels', \App\Channel::all());
 ```
 
+### Episode 14
+Refactor test to DatabaseTestCase
+```blade
+@if (auth()->check())
+{{ auth()->user()->name }}
+@endif
+```
+

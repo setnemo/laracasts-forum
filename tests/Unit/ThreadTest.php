@@ -2,13 +2,10 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
+use Tests\DatabaseTestCase;
 
-class ThreadTest extends TestCase
+class ThreadTest extends DatabaseTestCase
 {
-    use DatabaseMigrations;
-
     protected $thread;
 
     public function setUp(): void
