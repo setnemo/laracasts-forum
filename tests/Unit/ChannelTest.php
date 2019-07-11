@@ -6,6 +6,7 @@ use Tests\DatabaseTestCase;
 
 class ChannelTest extends DatabaseTestCase
 {
+    /** @test */
     public function testChannelConsistsThreads()
     {
         $channel = create('App\Channel');

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Filters\ThreadFilters;
 
 class Thread extends Model
 {
@@ -36,5 +37,10 @@ class Thread extends Model
     public function addReplay($replay)
     {
         $this->replies()->create($replay);
+    }
+
+    public static function filter($query, ThreadFilters $filters)
+    {
+        return $filters->apply($query);
     }
 }

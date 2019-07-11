@@ -15,6 +15,7 @@ class ReadThreadsTest extends DatabaseTestCase
         $this->threads = create('App\Thread', 10);
     }
 
+    /** @test */
     public function testUserShowAllThreads()
     {
         $response = $this->get('/threads');
@@ -25,6 +26,7 @@ class ReadThreadsTest extends DatabaseTestCase
         }
     }
 
+    /** @test */
     public function testUserShowSingleThread()
     {
         foreach ($this->threads as $thread) {
@@ -32,6 +34,7 @@ class ReadThreadsTest extends DatabaseTestCase
         }
     }
 
+    /** @test */
     public function testUserCanReadRepliesForThread()
     {
         foreach ($this->threads as $thread) {
@@ -40,6 +43,7 @@ class ReadThreadsTest extends DatabaseTestCase
         }
     }
 
+    /** @test */
     public function testFilterThreadAccordingChannel()
     {
         $channel = create('App\Channel');
@@ -51,6 +55,7 @@ class ReadThreadsTest extends DatabaseTestCase
             ->assertDontSee($threadNotInChannel->title);
     }
 
+    /** @test */
     public function testUserCanFilterThreadByUsername()
     {
         $this->signIn(create('App\User', null, ['name' => 'JohnSnow']));

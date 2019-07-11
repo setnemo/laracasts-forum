@@ -15,16 +15,19 @@ class ThreadTest extends DatabaseTestCase
         $this->thread = factory('App\Thread')->create();
     }
 
+    /** @test */
     public function testThreadHasCreator()
     {
         $this->assertInstanceOf('App\User', $this->thread->creator);
     }
 
+    /** @test */
     public function testThreadHasReplies()
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Relations\HasMany', $this->thread->replies());
     }
 
+    /** @test */
     public function testThreadAddReply()
     {
         $this->thread->addReplay([
@@ -35,6 +38,7 @@ class ThreadTest extends DatabaseTestCase
         $this->assertCount(1, $this->thread->replies);
     }
 
+    /** @test */
     public function testThreadBelongsToChannel()
     {
         $thread = create('App\Thread');

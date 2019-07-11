@@ -6,6 +6,7 @@ use Tests\DatabaseTestCase;
 
 class CreateThreadTest extends DatabaseTestCase
 {
+    /** @test */
     public function testGuestNotSeeCreateThreadPage()
     {
         $this->withExceptionHandling();
@@ -17,6 +18,7 @@ class CreateThreadTest extends DatabaseTestCase
             ->assertRedirect('/login');
     }
 
+    /** @test */
     public function testAuthUserCreateNewThread()
     {
         $this->signIn();
@@ -30,7 +32,7 @@ class CreateThreadTest extends DatabaseTestCase
             ->assertSee($thread->body);
     }
 
-
+    /** @test */
     public function testThreadCanMakeStringPath()
     {
         $thread = create('App\Thread');
@@ -38,18 +40,21 @@ class CreateThreadTest extends DatabaseTestCase
         $this->assertEquals("/threads/{$thread->channel->slug}/{$thread->id}", $thread->getPath());
     }
 
+    /** @test */
     public function testThreadRequiresTitle()
     {
         $this->publishThread(['title' => null])
             ->assertSessionHasErrors('title');
     }
 
+    /** @test */
     public function testThreadRequireBody()
     {
         $this->publishThread(['body' => null])
             ->assertSessionHasErrors('body');
     }
 
+    /** @test */
     public function testThreadRequireChannel()
     {
         factory('App\Channel', 2)->create();

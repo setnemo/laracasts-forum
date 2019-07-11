@@ -6,6 +6,7 @@ use Tests\DatabaseTestCase;
 
 class ReplyTest extends DatabaseTestCase
 {
+    /** @test */
     public function testReplayHasOwner()
     {
         $reply = factory('App\Reply')->create();

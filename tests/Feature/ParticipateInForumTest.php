@@ -15,6 +15,7 @@ class ParticipateInForumTest extends DatabaseTestCase
         $this->thread = create('App\Thread');
     }
 
+    /** @test */
     public function testUnAuthUserMayNotAddreplies()
     {
         $this->withExceptionHandling()
@@ -22,6 +23,7 @@ class ParticipateInForumTest extends DatabaseTestCase
             ->assertRedirect('/login');
     }
 
+    /** @test */
     public function testAuthUserMayParticipateInForum()
     {
         $this->signIn();
@@ -32,5 +34,14 @@ class ParticipateInForumTest extends DatabaseTestCase
 
         $this->get($this->thread->getPath())
             ->assertSee($reply->body);
+    }
+
+    public function testReplyRequiresBody()
+    {
+        $this->withExceptionHandling()->signIn();
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', ['body' => null]);
+        $this->post($thread->getPath() . '/replies', $reply->toArray())
+            ->assertSessionHasErrors('body');
     }
 }
