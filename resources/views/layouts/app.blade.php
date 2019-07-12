@@ -32,25 +32,28 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto nav-item dropdown">
+                    <ul class="navbar-nav mr-auto nav-item ">
+                    <li class="dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse <span class="caret"></span></a>
-                        <ul class="nav-item dropdown dropdown-menu" aria-labelledby="navbarDropdown">
+                        <ul class="nav-item dropdown dropdown-menu navbarDropdown" aria-labelledby="navbarDropdown">
                             <li><a href="/threads"  class="dropdown-item"  >All Threads</a></li>
                             @if(auth()->check())
-                            <li><a href="/threads?by={{ auth()->user()->name }}"  class="dropdown-item"  >My Threads</a></li>
+                                <li><a href="/threads?by={{ auth()->user()->name }}"  class="dropdown-item"  >My Threads</a></li>
                             @endif
                         </ul>
+                    </li>
+                    <li class="dropdown">
                         @if (count($channels))
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Channels <span class="caret"></span></a>
-                        <ul class="nav-item dropdown dropdown-menu" aria-labelledby="navbarDropdown">
-                            @foreach($channels as $channel)
-                                <li class=""><a  class="dropdown-item"  href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a></li>
-                            @endforeach
-                        </ul>
+                            <a href="#" class="nav-link dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Channels <span class="caret"></span></a>
+                            <ul class="nav-item dropdown dropdown-menu navbarDropdown2" aria-labelledby="navbarDropdown2">
+                                @foreach($channels as $channel)
+                                    <li class=""><a  class="dropdown-item"  href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a></li>
+                                @endforeach
+                            </ul>
                         @endif
                         <li><a href="/threads/create" class="nav-link">New Thread</a></li>
+                    </li>
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->

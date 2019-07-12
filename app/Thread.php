@@ -9,6 +9,22 @@ class Thread extends Model
 {
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('replyCount', function ($builder) {
+            $builder->withCount('replies');
+        });
+
+        static::addGlobalScope('creator', function ($builder) {
+            $builder->with('creator');
+        });
+        static::addGlobalScope('channel', function ($builder) {
+            $builder->with('channel');
+        });
+    }
+
     /**
      * Fetch path to the current thread
      *

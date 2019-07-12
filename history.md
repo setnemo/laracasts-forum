@@ -145,7 +145,28 @@ Refactor test to DatabaseTestCase
 
 ### Episode 15
 Refactor ThreadsControllers
-```blade
 
+### Episode 16
+Refactor Thread, add global scope for replies count
+```php
+protected static function boot()
+{
+    parent::boot();
+
+    static::addGlobalScope('replyCount', function ($builder) {
+        $builder->withCount('replies');
+    });
+}
 ```
+Refactor ThreadsController
+```php
+public function show(string $channel, Thread $thread)
+{
+    return view('threads.show', [
+        'thread' => $thread,
+        'replies' => $thread->replies()->paginate(5),
+    ]);
+}
+```
+
 
