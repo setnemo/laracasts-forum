@@ -169,4 +169,17 @@ public function show(string $channel, Thread $thread)
 }
 ```
 
+### Episode 17
+
+```php
+$response = $this->getJson('/threads?popular=all')->json();
+
+$this->builder->getQuery()->orders = [];
+return $this->builder->orderBy('replies_count', 'desc');
+
+if (\request()->wantsJson()) {
+    return $threads;
+}
+```
+
 
