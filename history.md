@@ -182,4 +182,40 @@ if (\request()->wantsJson()) {
 }
 ```
 
+### Episode 18
+
+```bash
+php artisan make:test Favorites
+php artisan make:controller FavoritesController
+php artisan make:migration create_favorites_table --create=favorites
+php artisan make:model Favorite
+```
+
+```php
+// 1
+DB::table('favorites')->insert([
+    'user_id' => auth()->id(),
+    'favorited_id' => $reply->id,
+    'favorited_type' => get_class($reply),
+]);
+// 2
+Favorite::create([
+    'user_id' => auth()->id(),
+    'favorited_id' => $reply->id,
+    'favorited_type' => get_class($reply),
+]);
+// 3
+$reply->favorites()->create(['user_id' => auth()->id()]);
+public function favorites()
+{
+    return $this->morphMany(Favorite::class, 'favorited');
+}
+//4 
+$reply->favorite();
+public function favorite()
+{
+    $this->favorites()->create(['user_id' => auth()->id()]);
+}
+```
+
 

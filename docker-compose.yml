@@ -13,6 +13,8 @@ services:
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
+      BLACKFIRE_CLIENT_ID: "${BLACKFIRE_CLIENT_ID}"
+      BLACKFIRE_CLIENT_TOKEN: "${BLACKFIRE_CLIENT_TOKEN}"
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
@@ -34,6 +36,8 @@ services:
       - ./docker/ssl/:/etc/nginx/ssl/
     networks:
       - laracasts-forum-network
+
+  #MySQL Service
   mysql:
     image: mysql:5.7.22
     container_name: 'laracasts-forum-mysql'
@@ -47,6 +51,8 @@ services:
       SERVICE_NAME: mysql
     networks:
       - laracasts-forum-network
+
+  #PhpMyAdmin Service
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: 'laracasts-forum-pma'
@@ -58,6 +64,17 @@ services:
       - '8080:80'
     networks:
       - laracasts-forum-network
+
+  #Blackfire Service
+  blackfire:
+    image: blackfire/blackfire
+    container_name: 'laracasts-forum-blackfire'
+    environment:
+      BLACKFIRE_SERVER_ID: "${BLACKFIRE_SERVER_ID}"
+      BLACKFIRE_SERVER_TOKEN: "${BLACKFIRE_SERVER_TOKEN}"
+    networks:
+      - laracasts-forum-network
+
 #Docker Networks
 networks:
   laracasts-forum-network:
