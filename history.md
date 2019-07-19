@@ -260,3 +260,9 @@ public function replies()
         ->with('owner');
 }
 ```
+
+### Episode 21
+
+```php
+    protected $with = ['owner', 'favorites'];
+```
