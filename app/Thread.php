@@ -17,9 +17,6 @@ class Thread extends Model
             $builder->withCount('replies');
         });
 
-        static::addGlobalScope('creator', function ($builder) {
-            $builder->with('creator');
-        });
         static::addGlobalScope('channel', function ($builder) {
             $builder->with('channel');
         });
@@ -40,7 +37,9 @@ class Thread extends Model
      */
     public function replies()
     {
-        return $this->hasMany(Reply::class)->withCount('favorites');
+        return $this->hasMany(Reply::class)
+            ->withCount('favorites')
+            ->with('owner');
     }
 
     /**
@@ -72,7 +71,7 @@ class Thread extends Model
      * @param ThreadFilters $filters
      * @return mixed
      */
-    public static function filter($query, ThreadFilters $filters)
+    public static function scopeFilter($query, ThreadFilters $filters)
     {
         return $filters->apply($query);
     }

@@ -232,3 +232,31 @@ public function show(string $channel, Thread $thread)
     return $thread->load('replies.favorites')->load('replies.owner');
 }
 ```
+
+### Episode 20
+
+```php
+    public function register()
+    {
+        if ($this->app->isLocal()) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
+    }
+    public function boot()
+    {
+        \View::composer('*', function ($view) {
+            $channels = Cache::rememberForever('channels', function () {
+                return Channel::all();
+            });
+            $view->with('channels', $channels);
+        });
+    }
+```
+```php
+public function replies()
+{
+    return $this->hasMany(Reply::class)
+        ->withCount('favorites')
+        ->with('owner');
+}
+```
