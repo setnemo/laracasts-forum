@@ -35,26 +35,43 @@ class Thread extends Model
         return "/threads/{$this->channel->slug}/{$this->id}";
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function replies()
     {
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)->withCount('favorites');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function channel()
     {
         return $this->belongsTo(Channel::class, 'channel_id');
     }
 
+    /**
+     * @param $replay
+     */
     public function addReplay($replay)
     {
         $this->replies()->create($replay);
     }
 
+    /**
+     * @param $query
+     * @param ThreadFilters $filters
+     * @return mixed
+     */
     public static function filter($query, ThreadFilters $filters)
     {
         return $filters->apply($query);

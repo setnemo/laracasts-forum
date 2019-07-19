@@ -14,7 +14,7 @@
                     </div>
                     </article>
                 </div>
-                @foreach($replies as $replay)
+                @foreach($replies as $reply)
                     @include('threads.replay')
                 @endforeach
 

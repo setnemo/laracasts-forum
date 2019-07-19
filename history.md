@@ -218,4 +218,17 @@ public function favorite()
 }
 ```
 
+### Episode 19
 
+```php
+public function replies()
+{
+    return $this->hasMany(Reply::class)->withCount('favorites');
+}
+```
+```php
+public function show(string $channel, Thread $thread)
+{
+    return $thread->load('replies.favorites')->load('replies.owner');
+}
+```

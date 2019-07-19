@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Thread;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 
 class RepliesController extends Controller
 {
@@ -12,7 +13,13 @@ class RepliesController extends Controller
         $this->middleware('auth');
     }
 
-    public function store(string $channel, Thread $thread)
+    /**
+     * @param string $channel
+     * @param Thread $thread
+     * @return RedirectResponse
+     * @throws ValidationException
+     */
+    public function store(string $channel, Thread $thread): RedirectResponse
     {
         $this->validate(request(), ['body' => 'required']);
 
