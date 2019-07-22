@@ -292,3 +292,22 @@ static::deleting(function ($thread) {
 });
 
 ```
+
+### Episode 24
+```php
+if (auth()->id() != $thread->user_id) {
+    abort(403, 'Permission denied');
+}
+```
+```bash
+php artisan make:policy ThreadPolicy --model=Thread
+```
+```php
+protected $policies = [
+     'App\Thread' => 'App\Policies\ThreadPolicy',
+];
+Gate::before(function ($user) {
+    if ($user->name == 'Artem Pakhomov') {
+        return true;
+    }
+});```

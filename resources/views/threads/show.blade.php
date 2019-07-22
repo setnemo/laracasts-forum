@@ -6,8 +6,15 @@
             <div class="col-md-8 mt-3">
                 <div class="card panel panel-default">
                     <article>
-                    <div class="card-header"><h4>{{ $thread->title }}</h4></div>
-
+                    <div class="card-header level"><h4 class="flex">{{ $thread->title }}</h4>
+                        @can ('update', $thread)
+                            <form action="{{ $thread->getPath() }}" method="POST" role="form">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+                                <button type="submit" class="btn btn-sm btn-link btn-danger">Delete thread</button>
+                            </form>
+                        @endcan
+                    </div>
                     <div class="card-body">
 
                                 <div class="body">{{ $thread->body }}</div>

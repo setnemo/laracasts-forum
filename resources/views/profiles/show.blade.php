@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 mt-3 col-md-offset-2">
             <h4>{{ $profileUser->name }} <small>Since {{ $profileUser->created_at->diffForHumans() }}</small></h4>
-            @foreach($threads as $thread)
+            @forelse($threads as $thread)
             <div class="card mt-3">
                 <div class="card-header level">
                     <h3 class="flex">
@@ -13,11 +13,13 @@
                             {{ $thread->title }}
                         </a>
                     </h3>
+                    @can ('update', $thread)
                     <form action="{{ $thread->getPath() }}" method="POST" role="form">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-sm btn-link btn-danger">Delete thread</button>
                     </form>
+                    @endcan
                 </div>
                 <div class="card-body">
                     {{ $thread->body }}
@@ -28,7 +30,9 @@
                         and has {{ $thread->replies_count }} {{ \Illuminate\Support\Str::plural('replies', $thread->replies_count) }}</small>
                 </div>
             </div>
-            @endforeach
+            @empty
+                <p>There are no relevant results at this time</p>
+            @endforelse
             <div class="mt-3">
                 {{ $threads->links() }}
             </div>

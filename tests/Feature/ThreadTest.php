@@ -67,34 +67,41 @@ class ThreadTest extends DatabaseTestCase
     }
 
     /** @test */
-    public function testDeleteThread()
+    public function testAuthUserCanDeleteThread()
     {
         $user = create('App\User');
         $this->signIn($user);
 
         $thread = create('App\Thread', null, ['user_id' => $user->id]);
         $reply = create('App\Reply', null, ['thread_id' => $thread->id]);
-        $response = $this->json('DELETE', $thread->getPath());
-        $response->assertStatus(204);
-        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
-        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->json('DELETE', $thread->getPath())
+            ->assertStatus(204);
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id])
+            ->assertDatabaseMissing('replies', ['id' => $reply->id]);
 
         $thread = create('App\Thread', null, ['user_id' => $user->id]);
         $reply = create('App\Reply', null, ['thread_id' => $thread->id]);
-        $response = $this->delete($thread->getPath());
-        $response->assertStatus(302);
-        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
-        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->delete($thread->getPath())
+            ->assertStatus(302);
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id])
+            ->assertDatabaseMissing('replies', ['id' => $reply->id]);
 
     }
 
     /** @test */
-    public function testGustNotDeleteThread()
+    public function testGuestNotDeleteThread()
     {
         $this->withExceptionHandling();
-        $thread = create('App\Thread');
-        $response = $this->delete($thread->getPath());
-        $response->assertRedirect('/login');
+        $user = create('App\User');
+        $userNew = create('App\User');
+        $thread = create('App\Thread', null, ['user_id' => $userNew->id]);
+
+        $this->delete($thread->getPath())
+            ->assertRedirect('/login');
+
+        $this->signIn($user)
+            ->json('DELETE', $thread->getPath())
+            ->assertStatus(403);
     }
 
     /** @support */

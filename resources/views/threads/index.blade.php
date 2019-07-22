@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 mt-3 col-md-offset-2">
-                @foreach($threads as $thread)
+                @forelse($threads as $thread)
                 <div class="card mt-3">
                     <div class="card-header level">
                         <h3 class="flex">
@@ -24,7 +24,9 @@
                          {{ $thread->created_at->diffforHumans() }}</small>
                     </div>
                 </div>
-                @endforeach
+                @empty
+                    <p>There are no relevant results at this time</p>
+                @endforelse
             </div>
         </div>
     </div>

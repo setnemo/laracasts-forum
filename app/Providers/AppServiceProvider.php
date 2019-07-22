@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Channel;
-use function foo\func;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
