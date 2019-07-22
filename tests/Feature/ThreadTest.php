@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\DatabaseTestCase;
 
-class CreateThreadTest extends DatabaseTestCase
+class ThreadTest extends DatabaseTestCase
 {
     /** @test */
     public function testGuestNotSeeCreateThreadPage()
@@ -66,6 +66,38 @@ class CreateThreadTest extends DatabaseTestCase
             ->assertSessionHasErrors('channel_id');
     }
 
+    /** @test */
+    public function testDeleteThread()
+    {
+        $user = create('App\User');
+        $this->signIn($user);
+
+        $thread = create('App\Thread', null, ['user_id' => $user->id]);
+        $reply = create('App\Reply', null, ['thread_id' => $thread->id]);
+        $response = $this->json('DELETE', $thread->getPath());
+        $response->assertStatus(204);
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
+        $thread = create('App\Thread', null, ['user_id' => $user->id]);
+        $reply = create('App\Reply', null, ['thread_id' => $thread->id]);
+        $response = $this->delete($thread->getPath());
+        $response->assertStatus(302);
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]);
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+
+    }
+
+    /** @test */
+    public function testGustNotDeleteThread()
+    {
+        $this->withExceptionHandling();
+        $thread = create('App\Thread');
+        $response = $this->delete($thread->getPath());
+        $response->assertRedirect('/login');
+    }
+
+    /** @support */
     private function publishThread(array $overrides = [])
     {
         $this->withExceptionHandling()->signIn();

@@ -42,9 +42,6 @@
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse <span class="caret"></span></a>
                         <ul class="nav-item dropdown dropdown-menu navbarDropdown" aria-labelledby="navbarDropdown">
                             <li><a href="/threads"  class="dropdown-item"  >All Threads</a></li>
-                            @if(auth()->check())
-                                <li><a href="{{ route('profile', auth()->user()->name) }}"  class="dropdown-item"  >My Threads</a></li>
-                            @endif
                             <li><a href="/threads?popular=all"  class="dropdown-item"  >Most Popular Threads</a></li>
                         </ul>
                     </li>
@@ -79,6 +76,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('profile', auth()->user()->name) }}"  class="dropdown-item"  >My Threads</a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

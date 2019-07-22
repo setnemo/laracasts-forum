@@ -275,3 +275,20 @@ User profile
 ```php
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 ```
+
+### Episode 23
+Delete threads
+```php
+$this->json('DELETE', $thread->getPath());
+$response = $this->delete($thread->getPath());
+```
+```php
+$thread->replies()->delete();
+
+```
+```php
+static::deleting(function ($thread) {
+    $thread->replies()->delete();
+});
+
+```
