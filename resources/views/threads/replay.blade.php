@@ -2,7 +2,7 @@
     <div class="card-body">
         <div class="level">
             <h5 class="flex" >
-                <a href="/threads?by={{ $reply->owner->name }}">{{ $reply->owner->name }}</a> said
+                <a href="/profiles/{{ $reply->owner->name }}">{{ $reply->owner->name }}</a> said
                 {{ $reply->created_at->diffForHumans() }}
             </h5>
             <div>

@@ -264,5 +264,14 @@ public function replies()
 ### Episode 21
 
 ```php
-    protected $with = ['owner', 'favorites'];
+protected $with = ['owner', 'favorites'];
+```
+
+### Episode 22
+User profile
+```blade
+<li><a href="{{ route('profile', auth()->user()->name) }}"  class="dropdown-item"  >My Threads</a></li>
+```
+```php
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 ```

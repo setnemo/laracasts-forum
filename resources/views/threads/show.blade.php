@@ -43,7 +43,7 @@
                         <div class="body">
                             <p>
                                 This thread was published {{ $thread->created_at->diffForHumans() }} by
-                                <a href="/threads?by={{ $thread->creator->name }}">{{ $thread->creator->name }}</a>,
+                                <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a>,
                                 and currently has {{ $thread->replies_count }} {{ \Illuminate\Support\Str::plural('comment', $thread->replies_count) }}.
                             </p>
                         </div>

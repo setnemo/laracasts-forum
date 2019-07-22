@@ -17,12 +17,6 @@
                                         </a>
                                     </h4>
                                     <a href="{{ $thread->getPath() }}">
-                                        {{--                                    <p class="mt-2">Posted {{ $thread->created_at->diffForHumans() }} by--}}
-                                        {{--                                        <a href="/threads?by={{ $thread->creator->name }}">--}}
-                                        {{--                                        {{ $thread->creator->name }}--}}
-                                        {{--                                    </a> in <a href="/threads/{{ $thread->channel->name }}">--}}
-                                        {{--                                        {{ $thread->channel->name }}--}}
-                                        {{--                                    </a> channel and currently</p>--}}
                                             {{ $thread->replies_count }} {{ \Illuminate\Support\Str::plural('replies', $thread->replies_count) }}
                                     </a>
                                 </div>
