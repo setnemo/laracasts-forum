@@ -311,3 +311,40 @@ Gate::before(function ($user) {
         return true;
     }
 });```
+
+### Episode 25
+```php
+class Activity extends Model
+{
+    protected $guarded = [];
+
+    public function subject()
+    {
+        return $this->morphTo();
+    }
+}
+```
+```php
+trait RecordsActivity
+{
+    protected static function bootRecordsActivity()
+    {
+        static::created(function ($thread) {
+            $thread->recordActivity('created');
+        });
+    }
+
+    protected function recordActivity($event)
+    {
+        $this->activity()->create([
+            'type' => $this->getActyvityType($event),
+            'user_id' => auth()->id(),
+        ]);
+    }
+
+    public function activity()
+    {
+        return $this->morphMany('App\Activity', 'subject');
+    }
+}
+```
