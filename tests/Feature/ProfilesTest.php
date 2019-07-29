@@ -19,10 +19,15 @@ class ProfilesTest extends DatabaseTestCase
     {
         $user = create('App\User');
 
+        $this->signIn($user);
+
         $thread = create('App\Thread', null, ['user_id' => $user->id]);
+
+        $reply = create('App\Reply', null, ['user_id' => $user->id, 'thread_id' => $thread->id]);
+
         $this->get("/profiles/{$user->name}")
             ->assertSee($thread->title)
-            ->assertSee($thread->body);
+            ->assertSee($reply->title);
 
     }
 }

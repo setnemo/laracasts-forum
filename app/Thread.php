@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Filters\ThreadFilters;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Thread extends Model
 {
@@ -22,7 +25,7 @@ class Thread extends Model
         });
 
         static::deleting(function ($thread) {
-            $thread->replies()->delete();
+            $thread->replies->each->delete();
         });
     }
 
@@ -37,7 +40,7 @@ class Thread extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
     public function replies()
     {
@@ -45,7 +48,15 @@ class Thread extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return MorphMany
+     */
+    public function activity()
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
+
+    /**
+     * @return BelongsTo
      */
     public function creator()
     {
@@ -53,7 +64,7 @@ class Thread extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo
      */
     public function channel()
     {

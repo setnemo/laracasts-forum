@@ -20,6 +20,10 @@ trait RecordsActivity
                 $model->recordActivity($event);
             });
         }
+
+        static::deleting(function ($model) {
+            $model->activity()->delete();
+        });
     }
 
     /**
@@ -27,7 +31,7 @@ trait RecordsActivity
      */
     protected static function getActivitiesRecord()
     {
-        return ['created', 'deleted'];
+        return ['created'];
     }
 
     /**
